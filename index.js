@@ -24,7 +24,7 @@ async function registrarEstudiante() {
     'insert into estudiante (nombre, rut, curso, nivel) values ($1, $2, $3, $4) RETURNING *;',
     [nombre, rut, curso, nivel]
   )
-  console.log(res)
+  console.log(`Estudiante ${nombre} Agregado con éxito`)
   client.end()
 }
 
@@ -57,13 +57,14 @@ async function actualizarEstudiante() {
 // Crear una función asíncrona para eliminar el registro de un estudiante de la base de datos.
 async function eliminarEstudiante() {
   const res = await client.query('DELETE FROM estudiante WHERE rut = $1', [rut])
+  console.log(`Registro de estudiante con rut ${rut} eliminado.`)
   console.log('Cantidad de registros eliminados', res.rowCount)
   client.end()
 }
 
 if (funcion == 'nuevo') {
   registrarEstudiante()
-} else if (funcion == 'rut') {
+} else if (funcion == 'consulta') {
   estudianteRut()
 } else if (funcion == 'todos') {
   todosEstudiantes()
